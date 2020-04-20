@@ -5,12 +5,13 @@
 from collections import Counter
 from tkinter import *
 from tkinter import messagebox
+from functools import partial
 
-def flames():
+def flames(name1, name2):
     string1 = name1.get()
-    name1.delete(0, END)
+    #name1.delete(0, END)
     string2 = name2.get()
-    name2.delete(0, END)
+    #name2.delete(0, END)
     if not string1 or not string2:
         #canvas.create_text((250, 40), text = "You did not enter either of the names. Please check your inputs")
         messagebox.showerror(title = "Flames Result", message = "You did not enter either of the names. Please check your inputs")
@@ -47,20 +48,27 @@ def flames():
 
 master = Tk()
 master.geometry('700x600')
-frame = Frame(master)
 
-name1 = Entry(master)
-name1.pack()
-name1.focus_set()
-
-name2 = Entry(master)
-name2.pack()
+Label(master, text = "Name1:").place(x=30, y = 50)
+Label(master, text = "Name2:").place(x = 30, y = 90)
 
 
-b = Button(master, text = "Get FLAMES", width = 25, command = flames)
-b.pack()
-b1 = Button(master, text = "QUIT", width = 10, command = master.quit)
-b1.pack(side = TOP)
+na1 = StringVar()
+na2 = StringVar()
+Entry(master, textvariable = na1).place(x = 80, y = 50)
+#name1.pack()
+#name1.focus_set()
+
+Entry(master, textvariable = na2).place(x = 80, y = 90)
+#name2.pack()
+
+flames = partial(flames, na1, na2)
+Button(master, text = "Get FLAMES", width = 25, command = flames).place(x=80, y=150)
+
+
+
+Button(master, text = "QUIT", width = 10, command = master.quit).place(x =30,y = 150)
+
 
 mainloop()
 
